@@ -1,26 +1,32 @@
 import asyncio
 from brain import AIBrain
 from mouth import speak
+from ears import AIEars
 
 async def main():
-    # Initialize the Brain
-    neuro = AIBrain()
+    # 1. Initialize all organs
+    print("--- Booting up Neuro ---")
+    neuro_brain = AIBrain()
+    neuro_ears = AIEars()
     
-    print("--- Neuro Clone Online (Type 'quit' to exit) ---")
+    print("--- Neuro is Online (Say 'Goodbye' to exit) ---")
     
     while True:
-        user_input = input("You: ")
+        # A. LISTEN (Microphone)
+        # We listen for 5 seconds. You can change this duration.
+        user_input = neuro_ears.listen(duration=5)
         
-        if user_input.lower() in ["quit", "exit"]:
+        # Skip empty silence
+        if len(user_input) < 2:
+            continue
+            
+        if "goodbye" in user_input.lower():
             break
             
-        # 1. Think
-        reply = neuro.think(user_input)
+        # B. THINK (Brain)
+        reply = neuro_brain.think(user_input)
         
-        # 2. Print
-        print(f"Neuro: {reply}")
-        
-        # 3. Speak
+        # C. SPEAK (Mouth)
         await speak(reply)
 
 if __name__ == "__main__":
