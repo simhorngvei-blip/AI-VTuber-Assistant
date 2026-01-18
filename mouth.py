@@ -4,7 +4,7 @@ import asyncio
 import os
 
 # Configuration
-VOICE = "en-US-AnaNeural" # A cute female voice
+VOICE = "en-IE-EmilyNeural" # A cute female voice
 OUTPUT_FILE = "speech.mp3"
 
 async def generate_audio(text):
